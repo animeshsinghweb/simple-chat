@@ -18,10 +18,19 @@ $(btn).click(() => {
     $(message).val('');
 });
 
-$(message).on('keypress', () => {
-    socket.emit('typing', {
-        handle: $(handle).val()
-    });
+$(message).on('keypress', (e) => {
+    if (e.which == 13) {
+        socket.emit('chat', {
+            message: $(message).val(),
+            handle: $(handle).val()
+        });
+        $(message).val('');
+    } else {
+        socket.emit('typing', {
+            handle: $(handle).val()
+        });
+    }
+
 });
 
 // Listen for events
